@@ -3,17 +3,25 @@ import { Form, Button, Box, Text } from 'grommet';
 import { InputField } from 'components/InputField/InputField';
 import { Link, useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
-import http from 'services/http';
+import { useAuthContext } from 'context';
+import * as Yup from 'yup';
+
+const loginSchema = Yup.object().shape({
+  email: Yup.string().required(),
+  password: Yup.string().required(),
+});
 
 export const Login = () => {
+  const { login } = useAuthContext();
   const { push } = useHistory();
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
-    onSubmit: (values) => {
-      http.post('login').then(() => push('/generations'));
+    validationSchema: loginSchema,
+    onSubmit: ({ email, password }) => {
+      login(email, password).then(() => push('/generations'));
     },
   });
   return (
@@ -35,6 +43,8 @@ export const Login = () => {
             placeholder="Enter your email"
             value={formik.values.email}
             onChange={formik.handleChange}
+            error={formik.errors.email}
+            touched={formik.touched.email}
           />
           <InputField
             id="Password"
@@ -44,9 +54,11 @@ export const Login = () => {
             placeholder="Enter your password"
             value={formik.values.password}
             onChange={formik.handleChange}
+            error={formik.errors.password}
+            touched={formik.touched.password}
           />
           <Button label="Login" type="submit" />
-          <Link to="generations">
+          <Link to="register">
             <Text label="Interactive Element" size="small" textAlign="end">
               Create account
             </Text>

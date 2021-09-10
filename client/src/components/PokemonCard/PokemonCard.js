@@ -34,7 +34,7 @@ const theme = {
   },
 };
 
-export const RichFooter = () => {
+export const PokemonCard = () => {
   const [open, setOpen] = React.useState(false);
   const [favorite, setFavorite] = React.useState(false);
 
@@ -43,7 +43,7 @@ export const RichFooter = () => {
     return (
       <Button
         hoverIndicator="light-4"
-        icon={<Icon color="brand" />}
+        icon={<Icon color="brand" fill />}
         {...rest}
       />
     );
@@ -97,10 +97,4 @@ export const RichFooter = () => {
       </Box>
     </Grommet>
   );
-};
-
-RichFooter.storyName = 'Rich footer';
-
-export default {
-  title: `Layout/Card/Rich footer`,
 };

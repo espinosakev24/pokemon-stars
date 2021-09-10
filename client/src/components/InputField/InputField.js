@@ -7,9 +7,17 @@ export const InputField = ({
   name,
   label,
   onChange,
+  error,
+  value,
+  touched,
   ...props
 }) => (
-  <FormField htmlFor={id} name={name} label={label}>
-    <TextInput {...props} />
+  <FormField label={label} error={touched && error}>
+    <TextInput
+      {...props}
+      name={name}
+      onChange={onChange}
+      placeholder={placeholder}
+    />
   </FormField>
 );

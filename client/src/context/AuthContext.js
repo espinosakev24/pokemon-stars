@@ -4,7 +4,7 @@ import http from 'services/http';
 
 const tokenName = 'pokestars-access-token';
 
-const AuthContext = createContext();
+const AuthContext = createContext({ token: null });
 
 export const useAuthContext = () => useContext(AuthContext);
 
@@ -14,9 +14,30 @@ export const AuthContextProvider = memo(({ children }) => {
     const accessToken = localStorage.getItem(tokenName);
     if (accessToken) {
       setToken(accessToken);
+      http.setTokenInHeaders(accessToken);
     } else {
       setToken(false);
     }
   }, []);
-  return <AuthContext.Provider>{children}</AuthContext.Provider>;
+
+  const login = (email, password) =>
+    http.post('login', { email, password }).then(({ access_token }) => {
+      setToken(access_token);
+      http.setTokenInHeaders(access_token);
+      localStorage.setItem(tokenName, access_token);
+    });
+
+  const register = (email, password) =>
+    http.post('register', { email, password });
+
+  const logout = () => {
+    localStorage.removeItem(tokenName);
+    setToken(false);
+  };
+
+  return (
+    <AuthContext.Provider value={{ token, login, logout, register }}>
+      {children}
+    </AuthContext.Provider>
+  );
 });

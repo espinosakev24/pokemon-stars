@@ -9,5 +9,6 @@ export const mockServer = () =>
       this.get(`${baseUrl}/api/games`, () => games);
       this.get(`${baseUrl}/api/games/:id/pokemons`, () => pokemons);
       this.post(`${baseUrl}/api/login`, () => loginData);
+      this.post(`${baseUrl}/api/register`, () => loginData);
     },
   });

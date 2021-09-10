@@ -1,17 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Button, Box, Text } from 'grommet';
 import { InputField } from 'components/InputField/InputField';
 import { Link, useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useAuthContext } from 'context';
+import Swal from 'sweetalert2';
+
+const registerSchema = Yup.object().shape({
+  email: Yup.string().required().email(),
+  password: Yup.string().required(),
+});
 
 export const Register = () => {
   const { push } = useHistory();
+  const { register } = useAuthContext();
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
-    onSubmit: (values) => push('/login'),
+    validationSchema: registerSchema,
+    onSubmit: ({ email, password }) =>
+      register(email, password)
+        .then(() => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'User was created successfully',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          push('/login');
+        })
+        .catch(() =>
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'User cannot be created',
+            showConfirmButton: false,
+            timer: 1500,
+          })
+        ),
   });
   return (
     <Box align="center" pad="large">
@@ -32,6 +62,8 @@ export const Register = () => {
             placeholder="Enter your email"
             value={formik.values.email}
             onChange={formik.handleChange}
+            error={formik.errors.email}
+            touched={formik.touched.email}
           />
           <InputField
             id="Password"
@@ -41,6 +73,8 @@ export const Register = () => {
             placeholder="Enter your password"
             value={formik.values.password}
             onChange={formik.handleChange}
+            error={formik.errors.password}
+            touched={formik.touched.password}
           />
           <Button label="Register" type="submit" />
           <Link to="login">

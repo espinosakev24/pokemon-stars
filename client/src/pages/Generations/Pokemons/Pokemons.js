@@ -9,7 +9,7 @@ export const Pokemons = () => {
   return (
     <Switch>
       <Route exact path={path} component={PokemonList} />
-      <Route exact path={path} component={PokemonDetail} />
+      <Route exact path={`${url}/pokemonId`} component={PokemonDetail} />
     </Switch>
   );
 };
