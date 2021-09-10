@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuthContext } from 'context/AuthContext';
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { Spinner } from 'components/Spinner';
 
 export const Protected = ({ children }) => {

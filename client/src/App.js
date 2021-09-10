@@ -1,5 +1,5 @@
 import React from 'react';
-import { grommet, Grommet, Heading } from 'grommet';
+import { grommet, Grommet } from 'grommet';
 import { Login } from './pages/Login';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { Register } from 'pages/Register';

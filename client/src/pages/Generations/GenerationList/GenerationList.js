@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Box, Grommet, Grid } from 'grommet';
 import { GameCard } from 'components/GameCard';
-import { push } from 'react-router-dom';
 import http from 'services/http';
+import { PokemonText } from 'components/Styled';
 import {
   Location,
   System,
@@ -40,6 +40,7 @@ const theme = {
 const data = [
   {
     color: 'blue',
+    generationId: '1',
     icon: <Wifi size="xlarge" />,
     title: 'Remote Access',
     subTitle: 'Lights out Management (LOM)',
@@ -47,6 +48,7 @@ const data = [
   },
   {
     color: 'green',
+    generationId: '2',
     icon: <System size="xlarge" />,
     title: 'System',
     subTitle: 'Sub-system and Devices',
@@ -54,6 +56,7 @@ const data = [
   },
   {
     color: 'red',
+    generationId: '3',
     icon: <User size="xlarge" />,
     title: 'User Sessions',
     subTitle: 'User Access on Server',
@@ -61,6 +64,7 @@ const data = [
   },
   {
     color: 'purple',
+    generationId: '4',
     icon: <Tasks size="xlarge" />,
     title: 'Logs',
     subTitle: 'Events, Integration, and Status',
@@ -68,6 +72,7 @@ const data = [
   },
   {
     color: 'orange',
+    generationId: '5',
     icon: <Location size="xlarge" />,
     title: 'Beacons',
     subTitle: 'Unique identification light',
@@ -75,6 +80,7 @@ const data = [
   },
   {
     color: 'teal',
+    generationId: '6',
     icon: <ShieldSecurity size="xlarge" />,
     title: 'Security',
     subTitle: 'Trusted Platform Module',
@@ -83,8 +89,6 @@ const data = [
 ];
 
 export const GenerationList = () => {
-  const [games, setGames] = useState([]);
-
   useEffect(() => {
     http.get('games').then((res) => {
       console.log(res);
@@ -92,13 +96,18 @@ export const GenerationList = () => {
   }, []);
 
   return (
-    <Grommet theme={theme} full>
+    <Grommet theme={theme}>
       <Box pad="large">
-        <Grid
-          gap="large"
-          rows="medium"
-          columns={{ count: 'fit', size: 'medium' }}
+        <PokemonText
+          textAlign="center"
+          margin={{ bottom: 'large' }}
+          weight="bold"
+          size="4xl"
         >
+          Pokemon Generations
+        </PokemonText>
+
+        <Grid gap="large" columns={{ count: 'fit', size: 'medium' }}>
           {data.map((val, idx) => (
             <GameCard item={val} key={idx} />
           ))}

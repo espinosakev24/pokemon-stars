@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Button, Box, Text } from 'grommet';
 import { InputField } from 'components/InputField/InputField';
 import { Link, useHistory } from 'react-router-dom';

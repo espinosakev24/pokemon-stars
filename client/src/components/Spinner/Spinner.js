@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Grommet, Spinner as GrommetSpinner, Text } from 'grommet';
+import { Box, Grommet, Spinner as GrommetSpinner } from 'grommet';
 
 export const Spinner = ({ size }) => (
   <Grommet full align="center" justify="center">
@@ -10,7 +10,6 @@ export const Spinner = ({ size }) => (
       direction="row"
       gap="small"
       pad="small"
-      key={size}
     >
       <GrommetSpinner size={size} />
     </Box>

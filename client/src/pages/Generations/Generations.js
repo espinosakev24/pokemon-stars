@@ -1,5 +1,6 @@
+import { AuthRoute } from 'components/AuthRoute';
 import React from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Switch, useRouteMatch } from 'react-router-dom';
 import { GenerationDetail } from './GenerationDetail';
 import { GenerationList } from './GenerationList';
 import { Pokemons } from './Pokemons/Pokemons';
@@ -9,13 +10,13 @@ export const Generations = () => {
 
   return (
     <Switch>
-      <Route exact path={path} component={GenerationList} />
-      <Route
+      <AuthRoute exact path={path} component={GenerationList} />
+      <AuthRoute
         exact
         path={`${path}/:generationId`}
         component={GenerationDetail}
       />
-      <Route path={`${path}/:generationId/pokemons`} component={Pokemons} />
+      <AuthRoute path={`${path}/:generationId/pokemons`} component={Pokemons} />
     </Switch>
   );
 };

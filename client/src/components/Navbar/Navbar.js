@@ -4,8 +4,8 @@ import { Avatar, Anchor, Box, Header, Nav } from 'grommet';
 import { useAuthContext } from 'context';
 
 const items = [
-  { label: 'Profile', link: 'profile' },
-  { label: 'Games', link: 'generations' },
+  { label: 'Profile', link: '/profile' },
+  { label: 'Games', link: '/generations' },
 ];
 
 const gravatarSrc =
