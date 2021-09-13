@@ -12,3 +12,10 @@ module.exports.getUserByEmail = (email) => {
     where: { email },
   });
 };
+
+module.exports.getUserById = (id) => {
+  return UserModel.findOne({
+    where: { id },
+    attributes: ['id', 'email', 'createdAt'],
+  });
+};
