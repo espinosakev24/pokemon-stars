@@ -13,7 +13,7 @@ module.exports.login = async (req, res) => {
 
   if (!user || !validPassword) {
     console.error('User or password is invalid');
-    return res.status(400).json({
+    return res.status(401).json({
       error: true,
       message: 'Failed to login',
     });
@@ -22,7 +22,7 @@ module.exports.login = async (req, res) => {
     if (err) res.status(400).json({ error: true, message: 'Failed to login' });
 
     res.status(201).json({
-      acess_token: token,
+      access_token: token,
     });
   });
 };

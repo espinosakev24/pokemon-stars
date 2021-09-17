@@ -3,12 +3,8 @@ const {
   getPokemonsByGenerationId,
 } = require('../gateways/pokemon.gateway');
 
-module.exports.getGenerations = async () => {
-  const generations = await getGenerations();
-  return generations;
-};
+module.exports.getGenerations = getGenerations;
 
-module.exports.getPokemonsByGenerationId = async (id) => {
-  const pokemons = getPokemonsByGenerationId(id);
-  return pokemons;
+module.exports.getPokemonsByGenerationId = (id) => {
+  return getPokemonsByGenerationId(id);
 };

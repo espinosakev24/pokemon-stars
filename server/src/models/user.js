@@ -2,7 +2,12 @@
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    static associate(models) {}
+    static associate(models) {
+      models.User.hasMany(models.Favorite, {
+        onDelete: 'cascade',
+        foreignKey: 'userId',
+      });
+    }
   }
   User.init(
     {
