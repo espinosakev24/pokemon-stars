@@ -23,9 +23,9 @@ export const PokemonList = () => {
   const [pokemons, setPokemons] = useState([]);
   useEffect(() => {
     http
-      .get(`games/${generationId}/pokemons`)
-      .then(({ pokemon_species }) => {
-        setPokemons(pokemon_species);
+      .get(`generations/${generationId}/pokemons`)
+      .then((allPokemons) => {
+        setPokemons(allPokemons);
         setLoading(false);
       })
       .catch((err) => {
@@ -46,13 +46,21 @@ export const PokemonList = () => {
         {loading ? (
           <Spinner size="xlarge" />
         ) : (
-          <Grid gap="large" columns={{ count: 'fit', size: 'medium' }}>
-            {pokemons.map(({ name }, idx) => {
+          <Grid gap="small" columns={{ count: 'fit', size: 'medium' }}>
+            {pokemons.map(({ name, defaultImage, height }, idx) => {
               if (colorIdx >= colors.length - 1) {
                 colorIdx = -1;
               }
               colorIdx++;
-              return <PokemonCard key={idx} color={colors[colorIdx]} />;
+              return (
+                <PokemonCard
+                  key={idx}
+                  name={name}
+                  color={colors[colorIdx]}
+                  image={defaultImage}
+                  height={height}
+                />
+              );
             })}
           </Grid>
         )}

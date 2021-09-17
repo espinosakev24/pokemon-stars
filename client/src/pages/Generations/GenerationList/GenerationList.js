@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Box, Grommet, Grid } from 'grommet';
+import React, { useEffect, memo } from 'react';
+import { Box, Grommet, Grid, Spinner } from 'grommet';
 import { GameCard } from 'components/GameCard';
 import http from 'services/http';
 import { PokemonText } from 'components/Styled';
@@ -11,6 +11,7 @@ import {
   User,
   Wifi,
 } from 'grommet-icons';
+import { useState } from 'react/cjs/react.development';
 
 const theme = {
   global: {
@@ -37,61 +38,27 @@ const theme = {
   },
 };
 
-const data = [
-  {
-    color: 'blue',
-    generationId: '1',
-    icon: <Wifi size="xlarge" />,
-    title: 'Remote Access',
-    subTitle: 'Lights out Management (LOM)',
-    message: 'Connected',
-  },
-  {
-    color: 'green',
-    generationId: '2',
-    icon: <System size="xlarge" />,
-    title: 'System',
-    subTitle: 'Sub-system and Devices',
-    message: 'Composable System',
-  },
-  {
-    color: 'red',
-    generationId: '3',
-    icon: <User size="xlarge" />,
-    title: 'User Sessions',
-    subTitle: 'User Access on Server',
-    message: '4 active sessions',
-  },
-  {
-    color: 'purple',
-    generationId: '4',
-    icon: <Tasks size="xlarge" />,
-    title: 'Logs',
-    subTitle: 'Events, Integration, and Status',
-    message: '204,353',
-  },
-  {
-    color: 'orange',
-    generationId: '5',
-    icon: <Location size="xlarge" />,
-    title: 'Beacons',
-    subTitle: 'Unique identification light',
-    message: '24 beacons connected',
-  },
-  {
-    color: 'teal',
-    generationId: '6',
-    icon: <ShieldSecurity size="xlarge" />,
-    title: 'Security',
-    subTitle: 'Trusted Platform Module',
-    message: 'No Module Connected',
-  },
-];
+const colors = ['blue', 'green', 'red', 'purple', 'orange', 'teal'];
+let colorIdx = -1;
 
-export const GenerationList = () => {
+export const GenerationList = memo(() => {
+  const [generations, setGenerations] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    http.get('games').then((res) => {
-      console.log(res);
+    http.get('generations').then((res) => {
+      setGenerations(
+        res.map((element) => {
+          if (colorIdx >= colors.length - 1) {
+            colorIdx = -1;
+          }
+          colorIdx++;
+          return {
+            ...element,
+            color: colors[colorIdx],
+          };
+        })
+      );
+      setLoading((state) => !state);
     });
   }, []);
 
@@ -107,12 +74,16 @@ export const GenerationList = () => {
           Pokemon Generations
         </PokemonText>
 
-        <Grid gap="large" columns={{ count: 'fit', size: 'medium' }}>
-          {data.map((val, idx) => (
-            <GameCard item={val} key={idx} />
-          ))}
-        </Grid>
+        {loading ? (
+          <Spinner size="xlarge" />
+        ) : (
+          <Grid gap="large" columns={{ count: 'fit', size: 'medium' }}>
+            {generations.map((val, idx) => (
+              <GameCard item={val} key={idx} />
+            ))}
+          </Grid>
+        )}
       </Box>
     </Grommet>
   );
-};
+});

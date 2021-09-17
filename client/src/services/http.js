@@ -15,11 +15,21 @@ class HttpService {
       fetch(`${this.baseUrl}/${url}`, {
         method,
         headers: { ...this.headers, ...(headers && {}) },
-        body: body ?? JSON.stringify(body),
+        body: body && JSON.stringify(body),
       })
-        .then((res) => res.json())
-        .then((body) => body)
-        .catch((err) => console.log('An error occur while fetching', err));
+        .then((res) => {
+          if (!res.ok) {
+            const error = new Error('HTTP status code: ' + res.status);
+            error.response = res;
+            error.status = res.status;
+            throw error;
+          }
+          return res.json();
+        })
+        .then((body) => {
+          console.log(body);
+          return body;
+        });
   }
   get = this.req('get');
   post = this.req('post');

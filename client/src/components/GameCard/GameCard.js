@@ -17,32 +17,32 @@ const Identifier = ({ children, title, subTitle, size, ...rest }) => (
 );
 
 export const GameCard = ({
-  item: { generationId, message, title, subTitle, color },
+  item: { id, pokemonAmount, name, subTitle, color },
   ...props
 }) => (
   <Link
     style={{ textDecoration: 'none', color: 'inherit' }}
-    to={`generations/${generationId}/pokemons`}
+    to={`generations/${id}/pokemons`}
   >
     <ElevatedCard>
       <Card background={color} key={props.key}>
         <CardBody pad="medium">
           <Identifier
             pad="medium"
-            title={title}
+            title={name}
             subTitle={subTitle}
             size="medium"
             align="center"
           >
             <Text weight="bold" size="6xl" textAlign="center">
-              G-{toRomanNumber(generationId).toLowerCase()}
+              G-{toRomanNumber(id).toLowerCase()}
             </Text>
           </Identifier>
         </CardBody>
 
         <CardFooter pad={{ horizontal: 'large', vertical: 'medium' }}>
-          <Text size="small">{message}</Text>{' '}
-          <Link to={`/generations/${generationId}`}>
+          <Text size="small">{pokemonAmount} Pokemons</Text>
+          <Link to={`/generations/${id}`}>
             <Text size="small" color="black" weight="bold">
               See details
             </Text>

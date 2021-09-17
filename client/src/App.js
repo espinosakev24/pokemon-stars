@@ -10,7 +10,7 @@ import { AuthRoute } from 'components/AuthRoute';
 import { AuthContextProvider } from 'context';
 import { Protected } from 'components/Protected';
 
-mockServer();
+// mockServer();
 
 function App() {
   return (

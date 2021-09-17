@@ -21,14 +21,14 @@ export const AuthContextProvider = memo(({ children }) => {
   }, []);
 
   const login = (email, password) =>
-    http.post('login', { email, password }).then(({ access_token }) => {
+    http.post('auth/login', { email, password }).then(({ access_token }) => {
       setToken(access_token);
       http.setTokenInHeaders(access_token);
       localStorage.setItem(tokenName, access_token);
     });
 
   const register = (email, password) =>
-    http.post('register', { email, password });
+    http.post('users/register', { email, password });
 
   const logout = () => {
     localStorage.removeItem(tokenName);

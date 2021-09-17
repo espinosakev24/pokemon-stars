@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useAuthContext } from 'context';
 import * as Yup from 'yup';
+import { useState } from 'react/cjs/react.development';
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().required(),
@@ -12,6 +13,7 @@ const loginSchema = Yup.object().shape({
 });
 
 export const Login = () => {
+  const [serverError, setServerError] = useState(false);
   const { login } = useAuthContext();
   const { push } = useHistory();
   const formik = useFormik({
@@ -21,7 +23,11 @@ export const Login = () => {
     },
     validationSchema: loginSchema,
     onSubmit: ({ email, password }) => {
-      login(email, password).then(() => push('/generations'));
+      login(email, password)
+        .then(() => push('/generations'))
+        .catch((error) => {
+          error.status === 401 && setServerError('Invalid credentials');
+        });
     },
   });
   return (
@@ -63,6 +69,7 @@ export const Login = () => {
               Create account
             </Text>
           </Link>
+          {serverError && <Text color="status-critical">{serverError}</Text>}
         </Box>
       </Form>
     </Box>
