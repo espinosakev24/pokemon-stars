@@ -1,6 +1,7 @@
 import React, { createContext, memo, useEffect, useState } from 'react';
 import { useContext } from 'react/cjs/react.development';
 import http from 'services/http';
+import jwtDecode from 'jwt-decode';
 
 const tokenName = 'pokestars-access-token';
 
@@ -10,11 +11,14 @@ export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = memo(({ children }) => {
   const [token, setToken] = useState(null);
+  const [user, setUser] = useState({});
+
   useEffect(() => {
     const accessToken = localStorage.getItem(tokenName);
     if (accessToken) {
       setToken(accessToken);
       http.setTokenInHeaders(accessToken);
+      setUser(jwtDecode(accessToken));
     } else {
       setToken(false);
     }
@@ -36,7 +40,7 @@ export const AuthContextProvider = memo(({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ token, login, logout, register }}>
+    <AuthContext.Provider value={{ token, login, logout, register, user }}>
       {children}
     </AuthContext.Provider>
   );

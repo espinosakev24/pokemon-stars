@@ -12,13 +12,14 @@ const gravatarSrc =
   'https://cdn.dribbble.com/users/2192291/screenshots/7482012/media/e829a380ecd3b768f4c6c7a4e3dd63cb.jpg?compress=1&resize=400x300';
 
 export const Navbar = () => {
-  const { logout } = useAuthContext();
+  const { logout, user } = useAuthContext();
+
   return (
     <Header background="dark-1" pad="small">
       <Box direction="row" align="center" gap="small">
         <Avatar src={gravatarSrc} />
         <Anchor color="white" href="https://github.com/espinosakev24">
-          Your name!
+          {user.email}
         </Anchor>
       </Box>
       <Nav direction="row">

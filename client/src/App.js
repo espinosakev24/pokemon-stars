@@ -9,6 +9,7 @@ import { Navbar } from 'components/Navbar';
 import { AuthRoute } from 'components/AuthRoute';
 import { AuthContextProvider } from 'context';
 import { Protected } from 'components/Protected';
+import { Profile } from 'pages/Profile';
 
 // mockServer();
 
@@ -24,6 +25,7 @@ function App() {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <AuthRoute path="/generations" component={Generations} />
+            <AuthRoute path="/profile" component={Profile} />
           </Switch>
         </Router>
       </Grommet>

@@ -9,7 +9,8 @@ module.exports.getGenerations = (req, res) => {
 
 module.exports.getPokemonsByGenerationId = (req, res) => {
   const { generationId } = req.params;
-  getPokemonsByGenerationId(generationId).then((pokemons) =>
+  const { userId } = req.decoded;
+  getPokemonsByGenerationId(generationId, userId).then((pokemons) =>
     res.status(201).send(pokemons)
   );
 };

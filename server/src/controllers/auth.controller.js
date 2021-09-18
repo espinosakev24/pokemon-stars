@@ -18,11 +18,16 @@ module.exports.login = async (req, res) => {
       message: 'Failed to login',
     });
   }
-  jwt.sign({ userId: user.id }, 'secretkey', (err, token) => {
-    if (err) res.status(400).json({ error: true, message: 'Failed to login' });
+  jwt.sign(
+    { userId: user.id, email: user.email },
+    'secretkey',
+    (err, token) => {
+      if (err)
+        res.status(400).json({ error: true, message: 'Failed to login' });
 
-    res.status(201).json({
-      access_token: token,
-    });
-  });
+      res.status(201).json({
+        access_token: token,
+      });
+    }
+  );
 };

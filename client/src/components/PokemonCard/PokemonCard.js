@@ -11,7 +11,7 @@ import {
   Image,
   Paragraph,
 } from 'grommet';
-
+import http from 'services/http';
 import { Favorite, ShareOption } from 'grommet-icons';
 
 const theme = {
@@ -32,8 +32,22 @@ const theme = {
   },
 };
 
-export const PokemonCard = ({ name, color, image, height }) => {
-  const [favorite, setFavorite] = React.useState(false);
+export const PokemonCard = ({ isFavorite, name, color, image, height }) => {
+  const [favorite, setFavorite] = React.useState(isFavorite);
+  const addFavorite = (pokemonName) => () => {
+    http
+      .post('favorites', { pokemonName })
+      .then((addedPokemon) => {
+        console.log('Pokemon added to favorites', addedPokemon);
+        setFavorite((state) => !state);
+      })
+      .catch((err) => console.error('couldnt add pokemon to favorites', err));
+  };
+  const removeFavorite = (pokemonName) => () => {
+    http
+      .delete(`favorites/${pokemonName}`)
+      .then((deleted) => setFavorite((state) => !state));
+  };
 
   return (
     <Grommet theme={theme}>
@@ -41,7 +55,7 @@ export const PokemonCard = ({ name, color, image, height }) => {
         <ElevatedCard>
           <Card elevation="large" width="medium" background={color}>
             <CardBody height="small">
-              <Box height="medium" width="medium">
+              <Box height="medium" width="medium" pad="large">
                 <Image
                   fit="contain"
                   src={
@@ -63,9 +77,7 @@ export const PokemonCard = ({ name, color, image, height }) => {
                 <Button
                   icon={<Favorite color={favorite ? 'red' : undefined} />}
                   hoverIndicator
-                  onClick={() => {
-                    setFavorite(!favorite);
-                  }}
+                  onClick={favorite ? removeFavorite(name) : addFavorite(name)}
                 />
                 <Button icon={<ShareOption color="plain" />} hoverIndicator />
               </Box>

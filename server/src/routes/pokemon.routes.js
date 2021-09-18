@@ -8,6 +8,6 @@ const { verifyToken } = require('../middlewares/verifyToken');
 const router = express.Router();
 
 router.get('/', verifyToken, getGenerations);
-router.get('/:generationId/pokemons', getPokemonsByGenerationId);
+router.get('/:generationId/pokemons', verifyToken, getPokemonsByGenerationId);
 
 module.exports = router;

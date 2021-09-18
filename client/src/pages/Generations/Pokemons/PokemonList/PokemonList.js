@@ -32,6 +32,7 @@ export const PokemonList = () => {
         console.log('here the error', err);
       });
   }, [generationId]);
+
   return (
     <Grommet>
       <Box pad="large">
@@ -47,7 +48,7 @@ export const PokemonList = () => {
           <Spinner size="xlarge" />
         ) : (
           <Grid gap="small" columns={{ count: 'fit', size: 'medium' }}>
-            {pokemons.map(({ name, defaultImage, height }, idx) => {
+            {pokemons.map(({ isFavorite, name, defaultImage, height }, idx) => {
               if (colorIdx >= colors.length - 1) {
                 colorIdx = -1;
               }
@@ -55,6 +56,7 @@ export const PokemonList = () => {
               return (
                 <PokemonCard
                   key={idx}
+                  isFavorite={isFavorite}
                   name={name}
                   color={colors[colorIdx]}
                   image={defaultImage}
