@@ -3,14 +3,6 @@ import { Box, Grommet, Grid, Spinner } from 'grommet';
 import { GameCard } from 'components/GameCard';
 import http from 'services/http';
 import { PokemonText } from 'components/Styled';
-import {
-  Location,
-  System,
-  ShieldSecurity,
-  Tasks,
-  User,
-  Wifi,
-} from 'grommet-icons';
 import { useState } from 'react/cjs/react.development';
 
 const theme = {

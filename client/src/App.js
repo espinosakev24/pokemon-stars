@@ -10,6 +10,7 @@ import { AuthRoute } from 'components/AuthRoute';
 import { AuthContextProvider } from 'context';
 import { Protected } from 'components/Protected';
 import { Profile } from 'pages/Profile';
+import { PokemonDetail } from 'components/PokemonDetail';
 
 // mockServer();
 
@@ -26,6 +27,7 @@ function App() {
             <Route exact path="/register" component={Register} />
             <AuthRoute path="/generations" component={Generations} />
             <AuthRoute path="/profile" component={Profile} />
+            <AuthRoute path="/:pokemonName/detail" component={PokemonDetail} />
           </Switch>
         </Router>
       </Grommet>

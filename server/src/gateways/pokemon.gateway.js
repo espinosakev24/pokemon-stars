@@ -28,6 +28,7 @@ module.exports.getPokemonsByGenerationId = (generationId) =>
           .then(({ data }) => data)
           .catch((error) => {
             console.error(error.response.data, error.response.status);
+            console.log(data);
             return {
               name: pokemonName,
               height: 0,
@@ -37,3 +38,6 @@ module.exports.getPokemonsByGenerationId = (generationId) =>
       )
     )
     .then((data) => Promise.all(data));
+
+module.exports.getPokemonByName = (pokemonName) =>
+  axios(`${ENDPOINTS.pokemon}/${pokemonName}`).then(({ data }) => data);

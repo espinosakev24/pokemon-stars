@@ -1,6 +1,7 @@
 const {
   getGenerations,
   getPokemonsByGenerationId,
+  getPokemonByName,
 } = require('../services/pokemon.service');
 
 module.exports.getGenerations = (req, res) => {
@@ -13,4 +14,12 @@ module.exports.getPokemonsByGenerationId = (req, res) => {
   getPokemonsByGenerationId(generationId, userId).then((pokemons) =>
     res.status(201).send(pokemons)
   );
+};
+
+module.exports.getPokemonByName = (req, res) => {
+  const { pokemonName } = req.params;
+
+  getPokemonByName(pokemonName).then((data) => {
+    res.status(201).json(data);
+  });
 };

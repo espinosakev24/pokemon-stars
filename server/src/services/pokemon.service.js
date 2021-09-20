@@ -2,6 +2,7 @@ const FavoriteModel = require('../models').Favorite;
 const {
   getGenerations,
   getPokemonsByGenerationId,
+  getPokemonByName,
 } = require('../gateways/pokemon.gateway');
 const { mapPokemon } = require('../utils/pokemons');
 
@@ -39,3 +40,12 @@ module.exports.getPokemonsByGenerationId = async (id, userId) => {
     }))
   );
 };
+
+module.exports.getPokemonByName = async (pokemonName) =>
+  getPokemonByName(pokemonName).then(({ name, height, sprites }) => ({
+    name,
+    height,
+    defaultImage: sprites
+      ? sprites.other.dream_world.front_default || sprites.front_default
+      : '',
+  }));
