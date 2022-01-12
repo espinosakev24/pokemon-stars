@@ -1,5 +1,5 @@
 import React, { useEffect, memo } from 'react';
-import { Box, Grommet, Grid, Spinner } from 'grommet';
+import { Box, Grommet, Grid, Spinner, Text } from 'grommet';
 import { GameCard } from 'components/GameCard';
 import http from 'services/http';
 import { PokemonText } from 'components/Styled';
@@ -67,7 +67,14 @@ export const GenerationList = memo(() => {
         </PokemonText>
 
         {loading ? (
-          <Spinner size="xlarge" />
+          <Box>
+            <Spinner
+              size="xlarge"
+              alignSelf="center"
+              margin={{ bottom: '10px' }}
+            />
+            <Text alignSelf="center">Loading...</Text>
+          </Box>
         ) : (
           <Grid gap="large" columns={{ count: 'fit', size: 'medium' }}>
             {generations.map((val, idx) => (

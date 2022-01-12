@@ -28,7 +28,6 @@ module.exports.getPokemonsByGenerationId = (generationId) =>
           .then(({ data }) => data)
           .catch((error) => {
             console.error(error.response.data, error.response.status);
-            console.log(data);
             return {
               name: pokemonName,
               height: 0,

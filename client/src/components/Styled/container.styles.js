@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Card } from 'grommet';
 
 export const AuthContainer = styled.div`
   max-width: 700px;
@@ -13,4 +14,8 @@ export const ElevatedCard = styled.div`
     -moz-box-shadow: 0px 4px 25px -8px rgba(0, 0, 0, 0.78);
     box-shadow: 0px 4px 25px -8px rgba(0, 0, 0, 0.78);
   }
+`;
+
+export const PointeredCard = styled(Card)`
+  cursor: pointer;
 `;

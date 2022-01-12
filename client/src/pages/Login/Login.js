@@ -30,6 +30,7 @@ export const Login = () => {
         });
     },
   });
+
   return (
     <Box align="center" pad="large">
       <Text size="xlarge" margin={{ bottom: 'small' }} weight="bold">

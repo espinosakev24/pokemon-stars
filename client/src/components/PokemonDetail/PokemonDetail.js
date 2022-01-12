@@ -1,8 +1,6 @@
 import React, { useEffect, memo } from 'react';
-import { Box, Grommet, Grid, Spinner } from 'grommet';
-import { useParams } from 'react-router-dom';
+import { Box, Grommet, Spinner, Text, Button } from 'grommet';
 import http from 'services/http';
-import { PokemonText } from 'components/Styled';
 import { useState } from 'react/cjs/react.development';
 
 const theme = {
@@ -24,31 +22,52 @@ const theme = {
   },
 };
 
-export const PokemonDetail = memo(() => {
+export const PokemonDetail = memo(({ pokemonName, onCloseHandler }) => {
   const [loading, setLoading] = useState(true);
-  const { pokemonName } = useParams();
-  const [pokemon, setPokemons] = useState({});
+  const [pokemon, setPokemon] = useState({});
+
+  const onClose = () => {
+    onCloseHandler();
+  };
 
   useEffect(() => {
     http.get(`generations/pokemons/${pokemonName}`).then((res) => {
-      setPokemons(res);
+      setPokemon(res);
       setLoading((s) => !s);
     });
-  }, []);
+  }, [pokemonName]);
+
+  useEffect(() => {
+    console.info(pokemon);
+  }, [pokemon]);
 
   return (
     <Grommet theme={theme}>
       <Box pad="large">
-        <PokemonText
-          textAlign="center"
-          margin={{ bottom: 'large' }}
-          weight="bold"
-          size="4xl"
-        >
+        <Text textAlign="center" weight="bold" size="large">
           Pokemon Detail
-        </PokemonText>
+        </Text>
 
-        {loading ? <Spinner size="xlarge" /> : <Grid gap="large">zfghjk</Grid>}
+        <Box
+          align="center"
+          justify="center"
+          gap="small"
+          direction="row"
+          alignSelf="center"
+          pad="large"
+        >
+          {loading ? (
+            <>
+              <Spinner />
+              <Text>Loading...</Text>
+            </>
+          ) : (
+            <Text>
+              Detail UI pending, pokemon info: {JSON.stringify(pokemon)}
+              <br /> <Button onClick={onClose}>Close</Button>
+            </Text>
+          )}
+        </Box>
       </Box>
     </Grommet>
   );
